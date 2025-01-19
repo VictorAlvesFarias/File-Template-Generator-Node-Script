@@ -1,0 +1,41 @@
+{
+  "entitiesDir": "./Domain/Entities",  
+  "baseNamespace":"Safeguard",
+  "fileConfigs": {
+    "service": {
+      "dir": "./Application/Services",
+      "folderName": "{EntityName}Service",
+      "createFolder": true,
+      "fileName": "{EntityName}Service.cs",
+      "template": "./templates/service-template.txt"
+    },
+    "serviceInterface": {
+      "dir": "./Application/Services",
+      "folderName": "{EntityName}Service",
+      "createFolder": true,
+      "fileName": "I{EntityName}Service.cs",
+      "template": "./templates/service-interface-template.txt"
+    },
+    "controllerInterface": {
+      "dir": "./App/Controllers",
+      "folderName": "",
+      "createFolder": false,
+      "fileName": "{EntityName}Controller.cs",
+      "template": "./templates/controller-template.txt"
+    },
+    "repository": {
+      "dir": "./Infrastructure/Repositories",
+      "folderName": "{EntityName}Repository",
+      "createFolder": true,
+      "fileName": "{EntityName}Repository.cs",
+      "template": "./templates/repository-template.txt"
+    },
+    "repositoryInterface": {
+      "dir": "./Infrastructure/Repositories",
+      "folderName": "{EntityName}Repository",
+      "createFolder": true,
+      "fileName": "I{EntityName}Repository.cs",
+      "template": "./templates/repository-Interface-Template.txt"
+    }
+  }
+}

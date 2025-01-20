@@ -16,11 +16,13 @@ function getNamespace(entityName) {
 }
 
 function createFile(directory, fileName, content) {
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory, { recursive: true });
+  const absoluteDirectory = path.resolve(process.cwd(), directory);
+
+  if (!fs.existsSync(absoluteDirectory)) {
+    fs.mkdirSync(absoluteDirectory, { recursive: true });
   }
 
-  const filePath = path.join(directory, fileName);
+  const filePath = path.join(absoluteDirectory, fileName);
   fs.writeFileSync(filePath, content, 'utf-8');
   console.log(`Arquivo criado: ${filePath}`);
 }
@@ -31,10 +33,11 @@ function createEntityFiles(entityName) {
       ? path.join(dir, folderName.replace('{EntityName}', entityName))
       : dir;
 
+    const absoluteTargetDir = path.resolve(process.cwd(), targetDir);
     const finalFileName = fileName.replace('{EntityName}', entityName);
-    const content = generateFileContent(template, entityName);
+    const content = generateFileContent(path.resolve(__dirname,template), entityName);
 
-    createFile(targetDir, finalFileName, content);
+    createFile(absoluteTargetDir, finalFileName, content);
   });
 }
 

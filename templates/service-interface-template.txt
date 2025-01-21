@@ -4,6 +4,5 @@ namespace {{Namespace}}.Interfaces.Services
 {
     public interface I{{EntityName}}Service
     {
-        // Definição dos métodos do serviço
     }
 }

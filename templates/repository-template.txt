@@ -4,6 +4,5 @@ namespace {{Namespace}}.Repositories
 {
     public class {{EntityName}}Repository : I{{EntityName}}Repository
     {
-        // Implementação do repositório
     }
 }

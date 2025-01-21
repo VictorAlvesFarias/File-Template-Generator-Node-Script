@@ -4,6 +4,5 @@ namespace {{Namespace}}.Interfaces.Repositories
 {
     public interface I{{EntityName}}Repository
     {
-        // Definição dos métodos do repositório
     }
 }

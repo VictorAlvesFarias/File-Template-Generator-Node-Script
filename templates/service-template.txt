@@ -4,6 +4,5 @@ namespace {{Namespace}}.Services
 {
     public class {{EntityName}}Service : I{{EntityName}}Service
     {
-        // Implementação do serviço
     }
 }

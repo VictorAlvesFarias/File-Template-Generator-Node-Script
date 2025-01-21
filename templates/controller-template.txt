@@ -2,43 +2,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace {{Namespace}}.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class {{EntityName}}Controller : ControllerBase
     {
-        // GET: api/{{EntityName}}
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(); // Retorne a lista de entidades
+            return Ok(); 
         }
-
-        // GET: api/{{EntityName}}/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok(); // Retorne a entidade específica pelo ID
+            return Ok();
         }
-
-        // POST: api/{{EntityName}}
         [HttpPost]
         public IActionResult Create([FromBody] {{EntityName}} entity)
         {
-            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity); // Cria nova entidade
+            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
         }
-
-        // PUT: api/{{EntityName}}/{id}
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] {{EntityName}} entity)
         {
-            return NoContent(); // Atualiza a entidade existente
+            return NoContent(); 
         }
-
-        // DELETE: api/{{EntityName}}/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return NoContent(); // Exclui a entidade
+            return NoContent();
         }
     }
 }

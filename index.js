@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./config.json');
 
-function generateFileContent(templatePath, entityName) {
+function generateFileContent(templatePath, entityName, dir) {
   let template = fs.readFileSync(templatePath, 'utf-8');
   
   template = template.replace(/{{EntityName}}/g, entityName);
-  template = template.replace(/{{Namespace}}/g, getNamespace(entityName));
+  template = template.replace(/{{Namespace}}/g, getNamespace(dir.split("/").join(".")));
 
   return template;
 }
@@ -35,7 +35,7 @@ function createEntityFiles(entityName) {
 
     const absoluteTargetDir = path.resolve(process.cwd(), targetDir);
     const finalFileName = fileName.replace('{EntityName}', entityName);
-    const content = generateFileContent(path.resolve(__dirname,template), entityName);
+    const content = generateFileContent(path.resolve(__dirname,template), entityName, dir);
 
     createFile(absoluteTargetDir, finalFileName, content);
   });

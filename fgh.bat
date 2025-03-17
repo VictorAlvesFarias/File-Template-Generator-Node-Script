@@ -51,7 +51,7 @@ if "%~1"=="--generate" (
         exit /b 1
     )
     echo Executing: node %ACDSL% generate %2
-    node %ACDSL% generate %2
+    node %ACDSL% %2
     exit /b
 )
 

@@ -47,7 +47,7 @@ if "%~1"=="--list" (
 
 if "%~1"=="--set" (
     echo Executing: node %ACDSL% set %2
-    node %ACDSL% set %2
+    node %ACDSL2% set %2
     exit /b
 )
 

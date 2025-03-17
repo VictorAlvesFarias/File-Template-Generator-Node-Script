@@ -10,7 +10,7 @@ namespace Application.Interfaces.Services
         Task<BaseResponse<{{EntityName}}>> Create({{EntityName}}Request createRequest);
         Task<BaseResponse<IEnumerable<{{EntityName}}>>> GetAll();
         Task<BaseResponse<{{EntityName}}>> GetById(int id);
-        Task<BaseResponse<{{EntityName}}>> Update(int id, {{EntityName}}Request updateRequest);
+        Task<DefaultResponse> Update(int id, {{EntityName}}Request updateRequest);
         Task<DefaultResponse> Delete(int id);
     }
 }

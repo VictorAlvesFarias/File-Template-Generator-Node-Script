@@ -70,7 +70,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<BaseResponse<bool>>> Update(int id, [FromBody] {{EntityName}}Request updateRequest)
+        public async Task<ActionResult<DefaultResponse>> Update(int id, [FromBody] {{EntityName}}Request updateRequest)
         {
             var result = await _{{entityName}}Service.Update(id, updateRequest);
 

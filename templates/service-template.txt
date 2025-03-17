@@ -1,10 +1,12 @@
 using Application.Dtos;
 using Application.Interfaces.Services;
 using Domain.Entities;
+using Infrastructure.Repositories.BaseRepository;
 using Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure.Repositories.BaseRepository;
 
 namespace Application.Services
 {
@@ -23,7 +25,7 @@ namespace Application.Services
             {
             };
 
-            var result = await _{{entityName}}Repository.Add(entity);
+            var result = await _{{entityName}}Repository.AddAsync(entity);
             var response = new BaseResponse<{{EntityName}}>();
 
             if (result != null)
@@ -78,10 +80,10 @@ namespace Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<{{EntityName}}>> Update(int id, {{EntityName}}Request updateRequest)
+        public async Task<DefaultResponse> Update(int id, {{EntityName}}Request updateRequest)
         {
             var entityToUpdate = await _{{entityName}}Repository.GetAsync(id);
-            var response = new BaseResponse<{{EntityName}}>();
+            var response = new DefaultResponse();
 
             if (entityToUpdate != null)
             {
@@ -89,7 +91,7 @@ namespace Application.Services
 
                 if (result)
                 {
-                    response.Success = true;
+                    response.Success = result;
                     response.Data = true;
                 }
                 else

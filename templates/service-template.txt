@@ -92,7 +92,6 @@ namespace Application.Services
                 if (result)
                 {
                     response.Success = result;
-                    response.Data = true;
                 }
                 else
                 {

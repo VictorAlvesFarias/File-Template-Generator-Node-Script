@@ -45,6 +45,12 @@ if "%~1"=="--list" (
     exit /b
 )
 
+if "%~1"=="--set" (
+    echo Executing: node %ACDSL% set %2
+    node %ACDSL% set %2
+    exit /b
+)
+
 if "%~1"=="--generate" (
     if "%~2"=="" (
         echo "Usage: --generate <entity-name>"
@@ -55,5 +61,5 @@ if "%~1"=="--generate" (
     exit /b
 )
 
-echo Unknown flag. Usage: --add, --remove, --list, or --generate.
+echo Unknown flag. Usage: --add, --remove, --set, --list, or --generate.
 exit /b 1

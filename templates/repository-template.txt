@@ -1,8 +1,66 @@
-using System;
+using Domain;Entities;
+using Application.Interfaces.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace {{Namespace}}.Repositories
+namespace Infrastructure.Repositories
 {
     public class {{EntityName}}Repository : I{{EntityName}}Repository
     {
+        private readonly List<{{EntityName}}> _{{entityName}}Database;
+
+        public {{EntityName}}Repository()
+        {
+            _{{entityName}}Database = new List<{{EntityName}}>();
+        }
+
+        public async Task<{{EntityName}}> Create({{EntityName}} createRequest)
+        {
+            var entity = new {{EntityName}}
+            {
+            };
+
+            _{{entityName}}Database.Add(entity);
+
+            return await Task.FromResult(entity); 
+        }
+
+        public async Task<IEnumerable<{{EntityName}}>> GetAll()
+        {
+            return await Task.FromResult(_{{entityName}}Database.AsEnumerable());
+        }
+
+        public async Task<{{EntityName}}> GetById(string id)
+        {
+            var entity = _{{entityName}}Database.FirstOrDefault(e => e.Id == id);
+
+            return await Task.FromResult(entity);
+        }
+
+        public async Task<{{EntityName}}> Update(string id, {{EntityName}} updateRequest)
+        {
+            var entity = _{{entityName}}Database.FirstOrDefault(e => e.Id == id);
+
+            if (entity != null)
+            {
+            }
+
+            return await Task.FromResult(entity);
+        }
+
+        public async Task<bool> Delete(string id)
+        {
+            var entity = _{{entityName}}Database.FirstOrDefault(e => e.Id == id);
+
+            if (entity != null)
+            {
+                _{{entityName}}Database.Remove(entity);
+                
+                return await Task.FromResult(true);
+            }
+
+            return await Task.FromResult(false);
+        }
     }
 }

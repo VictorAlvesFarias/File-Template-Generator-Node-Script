@@ -1,33 +1,106 @@
+using Application.Dtos;
+using Domain.Entities;
+using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace {{Namespace}}.Controllers
+namespace Api.Controllers
 {
+    [ApiController]
+    [Route("{{entityName}}")]
     public class {{EntityName}}Controller : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetAll()
+        private readonly I{{EntityName}}Service _{{entityName}}Service;
+
+        public {{EntityName}}Controller(I{{EntityName}}Service {{entityName}}Service)
         {
-            return Ok(); 
+            _{{entityName}}Service = {{entityName}}Service;
         }
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+
+        [HttpPost("create")]
+        public async Task<ActionResult<BaseResponse<int>>> Create([FromBody] {{EntityName}}Request createRequest)
         {
-            return Ok();
+            var result = await _{{entityName}}Service.Create(createRequest);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else if (result.Errors.Count > 0)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
-        [HttpPost]
-        public IActionResult Create([FromBody] {{EntityName}} entity)
+
+        [HttpGet("get-all")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<{{EntityName}}>>>> GetAll()
         {
-            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
+            var result = await _{{entityName}}Service.GetAll();
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else if (result.Errors.Count > 0)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] {{EntityName}} entity)
+
+        [HttpGet("get-by-id/{id}")]
+        public async Task<ActionResult<BaseResponse<{{EntityName}}>>> GetById(int id)
         {
-            return NoContent(); 
+            var result = await _{{entityName}}Service.GetById(id);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else if (result.Errors.Count > 0)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult<BaseResponse<bool>>> Update(int id, [FromBody] {{EntityName}}Request updateRequest)
         {
-            return NoContent();
+            var result = await _{{entityName}}Service.Update(id, updateRequest);
+
+            if (result.Success)
+            {
+                return NoContent();
+            }
+            else if (result.Errors.Count > 0)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult<BaseResponse<bool>>> Delete(int id)
+        {
+            var result = await _{{entityName}}Service.Delete(id);
+
+            if (result.Success)
+            {
+                return NoContent();
+            }
+            else if (result.Errors.Count > 0)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

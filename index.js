@@ -4,15 +4,14 @@ const config = require('./config.json');
 
 function generateFileContent(templatePath, entityName, dir) {
   let template = fs.readFileSync(templatePath, 'utf-8');
-  
-  template = template.replace(/{{EntityName}}/g, entityName);
-  template = template.replace(/{{Namespace}}/g, getNamespace(dir.split("/").join(".")));
+
+  const pascalCaseName = entityName.charAt(0).toUpperCase() + entityName.slice(1);
+
+  template = template.replace(/{{EntityName}}/g, pascalCaseName);
+
+  template = template.replace(/{{entityName}}/g, entityName.toLowerCase());
 
   return template;
-}
-
-function getNamespace(entityName) {
-  return `${config.baseNamespace}.${entityName}`;  
 }
 
 function createFile(directory, fileName, content) {
@@ -28,14 +27,19 @@ function createFile(directory, fileName, content) {
 }
 
 function createEntityFiles(entityName) {
-  Object.entries(config.fileConfigs).forEach(([key, { dir, folderName, createFolder, fileName, template }]) => {
+  Object.entries(config.fileConfigs).forEach(([key, { dir, folderName, createFolder, fileName, template, disable }]) => {
+
+    if (disable) {
+      return
+    }
+
     const targetDir = createFolder
       ? path.join(dir, folderName.replace('{EntityName}', entityName))
       : dir;
 
     const absoluteTargetDir = path.resolve(process.cwd(), targetDir);
     const finalFileName = fileName.replace('{EntityName}', entityName);
-    const content = generateFileContent(path.resolve(__dirname,template), entityName, dir);
+    const content = generateFileContent(path.resolve(__dirname, template), entityName, dir);
 
     createFile(absoluteTargetDir, finalFileName, content);
   });

@@ -1,8 +1,138 @@
-using System;
+using Application.Dtos;
+using Application.Interfaces.Services;
+using Domain.Entities;
+using Infrastructure.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace {{Namespace}}.Services
+namespace Application.Services
 {
     public class {{EntityName}}Service : I{{EntityName}}Service
     {
+        private readonly IBaseRepository<{{EntityName}}> _{{entityName}}Repository;
+
+        public {{EntityName}}Service(IBaseRepository<{{EntityName}}> {{entityName}}Repository)
+        {
+            _{{entityName}}Repository = {{entityName}}Repository;
+        }
+
+        public async Task<BaseResponse<{{EntityName}}>> Create({{EntityName}}Request createRequest)
+        {
+            var entity = new {{EntityName}}
+            {
+            };
+
+            var result = await _{{entityName}}Repository.Add(entity);
+            var response = new BaseResponse<{{EntityName}}>();
+
+            if (result != null)
+            {
+                response.Success = true;
+                response.Data = result;
+            }
+            else
+            {
+                response.Success = false;
+                response.Errors = new List<string> { "Failed to create entity." };
+            }
+
+            return response;
+        }
+
+        public async Task<BaseResponse<IEnumerable<{{EntityName}}>>> GetAll()
+        {
+            var result = _{{entityName}}Repository.GetAll();
+            var response = new BaseResponse<IEnumerable<{{EntityName}}>>();
+
+            if (result != null && result.Any())
+            {
+                response.Success = true;
+                response.Data = result.ToList();
+            }
+            else
+            {
+                response.Success = false;
+                response.Errors = new List<string> { "No entities found." };
+            }
+
+            return response;
+        }
+
+        public async Task<BaseResponse<{{EntityName}}>> GetById(int id)
+        {
+            var result = await _{{entityName}}Repository.GetAsync(id);
+            var response = new BaseResponse<{{EntityName}}>();
+
+            if (result != null)
+            {
+                response.Success = true;
+                response.Data = result;
+            }
+            else
+            {
+                response.Success = false;
+                response.Errors = new List<string> { "Entity not found." };
+            }
+
+            return response;
+        }
+
+        public async Task<BaseResponse<{{EntityName}}>> Update(int id, {{EntityName}}Request updateRequest)
+        {
+            var entityToUpdate = await _{{entityName}}Repository.GetAsync(id);
+            var response = new BaseResponse<{{EntityName}}>();
+
+            if (entityToUpdate != null)
+            {
+                var result = _{{entityName}}Repository.Update(entityToUpdate);
+
+                if (result)
+                {
+                    response.Success = true;
+                    response.Data = true;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Errors = new List<string> { "Failed to update entity." };
+                }
+            }
+            else
+            {
+                response.Success = false;
+                response.Errors = new List<string> { "Entity not found." };
+            }
+
+            return response;
+        }
+
+        public async Task<DefaultResponse> Delete(int id)
+        {
+            var entityToDelete = await _{{entityName}}Repository.GetAsync(id);
+            var response = new DefaultResponse();
+
+            if (entityToDelete != null)
+            {
+                var result = _{{entityName}}Repository.Remove(entityToDelete);
+
+                if (result)
+                {
+                    response.Success = true;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Errors = new List<string> { "Failed to delete entity." };
+                }
+            }
+            else
+            {
+                response.Success = false;
+                response.Errors = new List<string> { "Entity not found." };
+            }
+
+            return response;
+        }
     }
 }

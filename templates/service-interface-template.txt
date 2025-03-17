@@ -1,8 +1,16 @@
-using System;
+using Application.Dtos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.Entities;
 
-namespace {{Namespace}}.Interfaces.Services
+namespace Application.Interfaces.Services
 {
     public interface I{{EntityName}}Service
     {
+        Task<BaseResponse<{{EntityName}}>> Create({{EntityName}}Request createRequest);
+        Task<BaseResponse<IEnumerable<{{EntityName}}>>> GetAll();
+        Task<BaseResponse<{{EntityName}}>> GetById(int id);
+        Task<BaseResponse<{{EntityName}}>> Update(int id, {{EntityName}}Request updateRequest);
+        Task<DefaultResponse> Delete(int id);
     }
 }

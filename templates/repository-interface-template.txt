@@ -1,8 +1,15 @@
-using System;
+using Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace {{Namespace}}.Interfaces.Repositories
+namespace Application.Interfaces.Repositories
 {
     public interface I{{EntityName}}Repository
     {
+        Task<{{EntityName}}> Create({{EntityName}} createRequest);
+        Task<IEnumerable<{{EntityName}}>> GetAll();
+        Task<{{EntityName}}> GetById(string id);
+        Task<{{EntityName}}> Update(string id, {{EntityName}} updateRequest);
+        Task<bool> Delete(string id);
     }
 }

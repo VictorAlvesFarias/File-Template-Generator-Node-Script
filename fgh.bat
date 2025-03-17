@@ -1,59 +1,59 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: Configuração correta do caminho completo
-set ACDSL= "%~dp0index.js"
+:: Correct full path configuration
+set ACDSL="%~dp0index.js"
+set ACDSL2="%~dp0templateManager.js"
 
-:: Verificar o caminho do Node.js
+:: Check Node.js path
 where node >nul 2>nul
 if %errorlevel% neq 0 (
-    echo O Node.js não está instalado ou não está no PATH.
+    echo Node.js is not installed or not in PATH.
     exit /b 1
 )
 
-:: Checar o comando passado para o script
-if "%1"=="" (
-    echo Por favor, forneça um comando add, remove, list, generate.
+:: Check if a flag was provided
+if "%~1"=="" (
+    echo Please provide a flag. Example: --add, --remove, --list, --generate.
     exit /b 1
 )
 
-:: Executar comandos
-if "%1"=="add" (
-    if "%2"=="" (
-        echo "Uso: add <nome-do-template> <caminho-do-template>"
+:: Process the flags
+if "%~1"=="--add" (
+    if "%~2"=="" (
+        echo "Usage: --add <template-name> <template-path>"
         exit /b 1
     )
-    echo Executando: node %ACDSL% add %2 %3
-    node %ACDSL% add %2 %3
+    echo Executing: node %ACDSL% add %2 %3
+    node %ACDSL2% add %2 %3
     exit /b
 )
 
-if "%1"=="remove" (
-    if "%2"=="" (
-        echo "Uso: remove <nome-do-template>"
+if "%~1"=="--remove" (
+    if "%~2"=="" (
+        echo "Usage: --remove <template-name>"
         exit /b 1
     )
-    echo Executando: node %ACDSL% remove %2
-    node %ACDSL% remove %2
+    echo Executing: node %ACDSL% remove %2
+    node %ACDSL2% remove %2
     exit /b
 )
 
-if "%1"=="list" (
-    echo Executando: node %ACDSL% list
-    node %ACDSL% list
+if "%~1"=="--list" (
+    echo Executing: node %ACDSL% list
+    node %ACDSL2% list
     exit /b
 )
 
-if "%1"=="generate" (
-    if "%2"=="" (
-        echo Uso: generate nome-da-entidade
+if "%~1"=="--generate" (
+    if "%~2"=="" (
+        echo "Usage: --generate <entity-name>"
         exit /b 1
     )
-
-    node %ACDSL% %2
-
+    echo Executing: node %ACDSL% generate %2
+    node %ACDSL% generate %2
     exit /b
 )
 
-echo Comando desconhecido. Uso: add, remove, list ou generate.
+echo Unknown flag. Usage: --add, --remove, --list, or --generate.
 exit /b 1

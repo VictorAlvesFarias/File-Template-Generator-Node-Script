@@ -9,8 +9,7 @@ const templateDir = path.resolve(__dirname, globalConfig.templateBaseDir, templa
 const configPath = path.join(templateDir, 'config.json');
 
 if (!fs.existsSync(configPath)) {
-    console.error(`Configuração do grupo "${templateGroup}" não encontrada.`);
-    process.exit(1);
+    process.exit(1); // Configuration for the group "${templateGroup}" not found.
 }
 
 const config = require(configPath);
@@ -32,7 +31,6 @@ function createFile(directory, fileName, content) {
 
     const filePath = path.join(absoluteDirectory, fileName);
     fs.writeFileSync(filePath, content, 'utf-8');
-    console.log(`Arquivo criado: ${filePath}`);
 }
 
 function createEntityFiles(entityName) {
@@ -48,8 +46,7 @@ function createEntityFiles(entityName) {
         const templatePath = path.resolve(templateDir, template);
 
         if (!fs.existsSync(templatePath)) {
-            console.error(`Template não encontrado: ${templatePath}`);
-            return;
+            return; // Template not found: ${templatePath}
         }
 
         const content = generateFileContent(templatePath, entityName);
@@ -60,8 +57,7 @@ function createEntityFiles(entityName) {
 const [entityName] = process.argv.slice(2);
 
 if (!entityName) {
-    console.error('Por favor, forneça o nome da entidade.');
-    process.exit(1);
+    process.exit(1); // Please provide the entity name.
 }
 
 createEntityFiles(entityName);

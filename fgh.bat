@@ -34,8 +34,8 @@ if "%~1"=="--remove" (
         echo "Usage: --remove <template-name>"
         exit /b 1
     )
-    echo Executing: node %ACDSL% remove %2
-    node %ACDSL2% remove %2
+    echo Executing: node %ACDSL% delete %2
+    node %ACDSL2% delete %2
     exit /b
 )
 

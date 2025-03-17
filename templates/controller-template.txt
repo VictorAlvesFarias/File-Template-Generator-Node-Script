@@ -52,7 +52,7 @@ namespace Api.Controllers
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        [HttpGet("get-by-id/{id}")]
+        [HttpGet("get-by-id")]
         public async Task<ActionResult<BaseResponse<{{EntityName}}>>> GetById(int id)
         {
             var result = await _{{entityName}}Service.GetById(id);
@@ -69,7 +69,7 @@ namespace Api.Controllers
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("update")]
         public async Task<ActionResult<DefaultResponse>> Update(int id, [FromBody] {{EntityName}}Request updateRequest)
         {
             var result = await _{{entityName}}Service.Update(id, updateRequest);
@@ -86,7 +86,7 @@ namespace Api.Controllers
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete")]
         public async Task<ActionResult<BaseResponse<bool>>> Delete(int id)
         {
             var result = await _{{entityName}}Service.Delete(id);
